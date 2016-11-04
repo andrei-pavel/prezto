@@ -11,3 +11,21 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+setopt clobber
+unsetopt nomatch
+unsetopt correct
+export PATH=$PATH:/usr/local/kea/bin:/usr/local/kea/sbin
+export CQLSH_NO_BUNDLED=true
+
+if [ -f $HOME/.aliases ]; then
+    source $HOME/.aliases
+fi
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+export HISTSIZE=9999999
+export SAVEHIST=9999999
+bindkey "${terminfo[khome]}" beginning-of-line
+bindkey "${terminfo[kend]}" end-of-line
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+

@@ -25,14 +25,25 @@ zstyle ':prezto:*:*' color 'yes'
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'environment' \
-  'terminal' \
-  'editor' \
-  'history' \
+  'archive' \
+  'command-not-found' \
   'directory' \
+  'editor' \
+  'fasd' \
+  'git' \
+  'history' \
+  'prompt' \
+  'rsync' \
   'spectrum' \
+  'ssh' \
+  'syntax-highlighting' \
+  'history-substring-search' \
+  'autosuggestions' \
+  'screen' \
+  'terminal' \
+  'tmux' \
   'utility' \
-  'completion' \
-  'prompt'
+  'completion'
 
 #
 # Autosuggestions
@@ -46,7 +57,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -92,7 +103,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'steeef'
 
 #
 # Ruby
