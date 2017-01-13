@@ -14,7 +14,7 @@ fi
 setopt clobber
 unsetopt nomatch
 unsetopt correct
-export PATH=$PATH:/usr/local/kea/bin:/usr/local/kea/sbin
+export PATH=$PATH:/usr/local/kea/bin:/usr/local/kea/sbin:/usr/local/dt-kea-config-tool-kea-config-tool/bin:/usr/local/dt-kea-config-tool-kea-config-tool/sbin
 export CQLSH_NO_BUNDLED=true
 
 if [ -f $HOME/.aliases ]; then
