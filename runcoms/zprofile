@@ -73,3 +73,7 @@ fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
 
+if [[ -f ${HOME}/.profile ]]; then
+  source ${HOME}/.profile
+fi
+
