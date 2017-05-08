@@ -19,3 +19,6 @@
 [submodule "modules/autosuggestions/external"]
 	path = modules/autosuggestions/external
 	url = https://github.com/tarruda/zsh-autosuggestions
+[submodule "zsh-virsh-autocomplete"]
+	path = zsh-virsh-autocomplete
+	url = https://github.com/jplitza/zsh-virsh-autocomplete.git
