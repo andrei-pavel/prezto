@@ -19,6 +19,11 @@ export CQLSH_NO_BUNDLED=true
 if [ -f $HOME/.aliases ]; then
     source $HOME/.aliases
 fi
+
+if [ -f $HOME/.profile ]; then
+    source $HOME/.profile
+fi
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export HISTSIZE=9999999
