@@ -14,21 +14,19 @@ fi
 setopt clobber
 unsetopt nomatch
 unsetopt correct
-export CQLSH_NO_BUNDLED=true
 
-if [ -f $HOME/.aliases ]; then
-    source $HOME/.aliases
+if [ -f "${HOME}/.aliases" ]; then
+    source "${HOME}/.aliases"
 fi
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-export HISTSIZE=9999999
-export SAVEHIST=9999999
+
+if [ -f "${HOME}/.profile" ]; then
+    source "${HOME}/.profile"
+fi
+
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
-export JENKINS_APP_TOKEN=sadfsdajfdafjadsjfadsjfadslads
-export JENKINS_AUTH_TOKEN=e48db72445c9d470fc099cd4d33ecad7
-export JENKINS_USER=andrei.pavel
+wal -i $(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs) -x -t
 
