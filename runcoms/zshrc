@@ -28,5 +28,5 @@ bindkey "${terminfo[kend]}" end-of-line
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
-wal -i $(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs) -x -t
+wal -i "$(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs)" -x -t
 
