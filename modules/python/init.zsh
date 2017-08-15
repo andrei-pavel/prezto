@@ -76,43 +76,56 @@ function _python-workon-cwd {
   fi
 }
 
-# Load virtualenvwrapper into the shell session, unless requested not to
-if zstyle -T ':prezto:module:python' skip-virtualenvwrapper-init; then
+# Load auto workon cwd hook
+if zstyle -t ':prezto:module:python:virtualenv' auto-switch 'yes'; then
+  # Auto workon when changing directory
+  add-zsh-hook chpwd _python-workon-cwd
+fi
+
+# Load virtualenvwrapper into the shell session, if pre-requisites are met
+# and unless explicitly requested not to
+if (( $+VIRTUALENVWRAPPER_VIRTUALENV || $+commands[virtualenv] )) && \
+  zstyle -T ':prezto:module:python:virtualenv' initialize ; then
   # Set the directory where virtual environments are stored.
   export WORKON_HOME="${WORKON_HOME:-$HOME/.virtualenvs}"
 
   # Disable the virtualenv prompt.
   VIRTUAL_ENV_DISABLE_PROMPT=1
 
-  if (( $+commands[pyenv-virtualenvwrapper] )); then
-    pyenv virtualenvwrapper
-  elif (( $+commands[pyenv-virtualenv-init] )); then
+  # Enable 'virtualenv' with 'pyenv'.
+  if (( $+commands[pyenv] && $+commands[pyenv-virtualenv-init] )); then
     eval "$(pyenv virtualenv-init -)"
-  elif (( $+commands[virtualenvwrapper_lazy.sh] )); then
-    source "$commands[virtualenvwrapper_lazy.sh]"
-  elif (( $+commands[virtualenvwrapper.sh] )); then
-    source "$commands[virtualenvwrapper.sh]"
+    # Optionall activate 'virtualenvwrapper' with 'pyenv' is available.
+    if (( $#commands[(i)pyenv-virtualenvwrapper(_lazy|)] )); then
+      pyenv "${${(@O)commands[(I)pyenv-virtualenvwrapper(_lazy|)]}[1]#pyenv-}"
+    fi
+  else
+    # Fallback to 'virtualenvwrapper' without 'pyenv' wrapper in '$path'
+    # and other known locations on a Debian based system.
+    virtenv_sources=(
+      ${(@Ov)commands[(I)virtualenvwrapper(_lazy|).sh]}
+      /usr/share/virtualenvwrapper/virtualenvwrapper(_lazy|).sh(OnN)
+    )
+    source "${virtenv_sources[1]}"
+    unset virtenv_sources
   fi
 fi
 
 # Load PIP completion.
-if (( $+commands[pip] )); then
+if (( $#commands[(i)pip(|[23])] )); then
   cache_file="${0:h}/cache.zsh"
 
-  if [[ "$commands[pip]" -nt "$cache_file" || ! -s "$cache_file" ]]; then
+  # Detect and use one available from among 'pip', 'pip2', 'pip3' variants
+  pip_command="$commands[(i)pip(|[23])]"
+
+  if [[ "$pip_command" -nt "$cache_file" || ! -s "$cache_file" ]]; then
     # pip is slow; cache its output. And also support 'pip2', 'pip3' variants
-    pip completion --zsh | sed -e "s|compctl -K [-_[:alnum:]]* pip|& pip2 pip3|" >! "$cache_file" 2> /dev/null
+    $pip_command completion --zsh \
+      | sed -e "s|compctl -K [-_[:alnum:]]* pip|& pip2 pip3|" >! "$cache_file" 2> /dev/null
   fi
 
   source "$cache_file"
-
-  unset cache_file
-
-  # Load auto workon cwd hook
-  if zstyle -t ':prezto:module:python:virtualenv' auto-switch 'yes'; then
-    # Auto workon when changing directory
-    add-zsh-hook chpwd _python-workon-cwd
-  fi
+  unset cache_file pip_command
 fi
 
 #
@@ -120,3 +133,5 @@ fi
 #
 
 alias py='python'
+alias py2='python2'
+alias py3='python3'
