@@ -30,7 +30,6 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'editor' \
   'fasd' \
-  'git' \
   'history' \
   'prompt' \
   'rsync' \
