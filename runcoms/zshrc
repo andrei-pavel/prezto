@@ -30,3 +30,6 @@ bindkey '^[[1;5C' forward-word
 
 wal -t -i "$(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs)"
 
+
+# added by travis gem
+[ -f /home/andrei/.travis/travis.sh ] && source /home/andrei/.travis/travis.sh
