@@ -15,13 +15,11 @@ setopt clobber
 unsetopt nomatch
 unsetopt correct
 
-if [ -f "${HOME}/.aliases" ]; then
-    source "${HOME}/.aliases"
-fi
-
-if [ -f "${HOME}/.profile" ]; then
-    source "${HOME}/.profile"
-fi
+for file in .aliases .profile .travis/travis.sh; do
+    if [ -f "${HOME}/${file}" ]; then
+        source "${HOME}/${file}"
+    fi
+done
 
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
@@ -30,6 +28,3 @@ bindkey '^[[1;5C' forward-word
 
 wal -t -i "$(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs)"
 
-
-# added by travis gem
-[ -f /home/andrei/.travis/travis.sh ] && source /home/andrei/.travis/travis.sh
