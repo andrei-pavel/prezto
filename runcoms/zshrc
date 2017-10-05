@@ -28,3 +28,7 @@ bindkey '^[[1;5C' forward-word
 
 wal -t -i "$(gsettings get org.gnome.desktop.background picture-uri | sed 's+file://++' | xargs)"
 
+export fpath=(~/.zsh/completion $fpath)
+
+autoload -Uz compinit && compinit -i
+
